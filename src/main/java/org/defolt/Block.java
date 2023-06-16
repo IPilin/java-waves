@@ -37,6 +37,7 @@ public class Block extends Rect {
 //        }
 
         value += velocity.getY();
+        sum += value / 100;
 
 //        if (value < 0f) {
 //            value = 0;
@@ -51,8 +52,12 @@ public class Block extends Rect {
     }
 
     public void show(Graphics g) {
-        value = dist(value);
-        g.setColor(Color.getHSBColor(0, 0, dist(value)));
+        if (mass == -1) {
+            g.setColor(Color.BLUE);
+        } else {
+            value = dist(value);
+            g.setColor(Color.getHSBColor(0, 0, dist(sum)));
+        }
         g.fillRect(position.getIntX(), position.getIntY(), width, height);
     }
 

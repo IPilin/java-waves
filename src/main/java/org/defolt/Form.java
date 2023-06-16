@@ -36,12 +36,12 @@ public class Form extends JPanel implements ActionListener, MouseListener, Mouse
         for (int j = 0; j < blocks.length; j++) {
             for (int i = 0; i < blocks[j].length; i++) {
                 blocks[j][i] = new Block(new Vector2D(i * (blockSize), j * (blockSize)), blockSize, blockSize);
-                if (i == 0 || i == blocks[j].length - 1) {
-                    blocks[j][i].setMass(-1);
-                }
-                if (j == 0 || j == blocks.length - 1) {
-                    blocks[j][i].setMass(-1);
-                }
+//                if (i == 0 || i == blocks[j].length - 1) {
+//                    blocks[j][i].setMass(-1);
+//                }
+//                if (j == 0 || j == blocks.length - 1) {
+//                    blocks[j][i].setMass(-1);
+//                }
                 if (i != 0) {
                     springs.add(new Spring(k, restLength, blocks[j][i - 1], blocks[j][i]));
                 }
@@ -123,7 +123,6 @@ public class Form extends JPanel implements ActionListener, MouseListener, Mouse
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mouseMapper(e);
     }
 
     @Override
@@ -143,6 +142,7 @@ public class Form extends JPanel implements ActionListener, MouseListener, Mouse
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        mouseMapper(e);
     }
 
     @Override
