@@ -1,4 +1,4 @@
-package org.example;
+package org.defolt;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,16 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Rect {
-    protected float x;
-    protected float y;
+    protected Vector2D position;
     protected int width;
     protected int height;
-
-    public int getIntX() {
-        return (int)x;
-    }
-
-    public int getIntY() {
-        return (int)y;
-    }
 }

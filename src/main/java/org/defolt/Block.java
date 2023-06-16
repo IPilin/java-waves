@@ -1,63 +1,65 @@
-package org.example;
+package org.defolt;
 
 import lombok.Getter;
 import lombok.Setter;
 
+import java.awt.*;
+
 @Getter
 @Setter
 public class Block extends Rect {
-    private float speed;
-    private float acceleration;
+    private Vector2D velocity = new Vector2D(0, 0);
     private int mass = 1;
+
     private Block prev;
     private Block next;
 
-    private float k = 0.001f;
-    private float maxSpeed = 10f;
-    private float restLength = 0;
+    private float value = 0;
+    private float sum = 0;
+    private float k = 0.1f;
+    private float restLength = 1;
+    private float zeroY = 400;
+    private float g = 0.01f;
 
-    public Block(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    public Block(Vector2D position, int width, int height) {
+        super(position, width, height);
     }
 
     public void update() {
         if (mass == -1) {
             return;
         }
-        if (speed > 0) {
-            if (prev != null && y - prev.y > maxSpeed) {
-                return;
-            }
-            if (next != null && y - next.y > maxSpeed) {
-                return;
-            }
-        }
-        if (speed < 0) {
-            if (prev != null && prev.y - y > maxSpeed) {
-                return;
-            }
-            if (next != null && next.y - y > maxSpeed) {
-                return;
-            }
-        }
-        y += speed;
+
+//        if (value < 5 && Math.abs(velocity.getY()) < 0.05f) {
+//            value = zeroY;
+//        } else {
+//            value += velocity.getY();
+//        }
+
+        value += velocity.getY();
+
+//        if (value < 0f) {
+//            value = 0;
+//            velocity = new Vector2D(0,0);
+//        }
+
+        value *= 0.999;
     }
 
-    public void generateSpeed() {
-        float aForce = 0;
-        float bForce = 0;
-        if (prev != null) {
-            float x = y - prev.y;
-            aForce = -k * x;
-        }
-        if (next != null) {
-            float x = y - next.y;
-            bForce = -k * x;
-        }
+    public void applyForce(float force) {
+        velocity.setY(velocity.getY() + force);
+    }
 
-        float g = 0.000f;
-        float gravity = y > 200 ? -g * (y - 200) : g * (200 - y);
+    public void show(Graphics g) {
+        value = dist(value);
+        g.setColor(Color.getHSBColor(0, 0, dist(value)));
+        g.fillRect(position.getIntX(), position.getIntY(), width, height);
+    }
 
-        speed += (aForce + bForce + gravity) / mass;
+    private float dist(float a) {
+        //a = Math.abs(a);
+        a = Math.max(a, 0f);
+        a = Math.min(a, 1f);
+        return a;
     }
 }

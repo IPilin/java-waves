@@ -1,4 +1,4 @@
-package org.example;
+package org.defolt;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,14 +22,14 @@ public class WavesApi {
 
     public void addBlock(int x, int y) {
         if (blocks.isEmpty()) {
-            var block = new Block(x, y, blockSize, blockSize);
+            var block = new Block(new Vector2D(x, y), blockSize, blockSize);
             block.setMass(-1);
             blocks.add(block);
             return;
         }
 
         var lastBlock = blocks.get(blocks.size() - 1);
-        var newBlock = new Block(x, y, blockSize, blockSize);
+        var newBlock = new Block(new Vector2D(x, y), blockSize, blockSize);
         lastBlock.setNext(newBlock);
         newBlock.setPrev(lastBlock);
         blocks.add(newBlock);
@@ -44,7 +44,6 @@ public class WavesApi {
     public void update() {
         for (var block : blocks) {
             block.update();
-            block.generateSpeed();
         }
     }
 }
